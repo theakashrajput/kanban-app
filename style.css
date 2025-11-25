@@ -150,6 +150,11 @@ nav button {
     transition: all 0.3s ease-in;
 }
 
+.is-dragging {
+    opacity: 0.5;
+    border: 2px dashed #666;
+}
+
 /* Modal Styles */
 
 .modal {
