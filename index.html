@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <nav>
+            <div class="left">
+                <h2>Kanban Board</h2>
+            </div>
+            <div class="right">
+                <button id="active-modal-btn">Add task</button>
+            </div>
+        </nav>
+        <section class="board">
+            <div id="toDoTaskCol" class="task-column">
+                <div class="heading">
+                    <div class="h-left">ToDo</div>
+                    <div class="h-right">Count</div>
+                </div>
+                <div class="tasks">
+                    <div draggable="true" class="task">
+                        <div class="task-head">
+                            <h3>Task 1</h3>
+                            <button>Delete</button>
+                        </div>
+                        <div class="task-body">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex asperiores reprehenderit
+                                ducimus
+                                nobis deserunt molestiae distinctio eum atque excepturi exercitationem saepe, unde sequi
+                                vel
+                                sit eligendi dicta inventore laborum nisi ipsam amet accusantium voluptas minima!</p>
+                        </div>
+                    </div>
+                    <div draggable="true" class="task">
+                        <div class="task-head">
+                            <h3>Task 2</h3>
+                            <button>Delete</button>
+                        </div>
+                        <div class="task-body">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex asperiores reprehenderit
+                                ducimus!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="inProgressTaskCol" class="task-column">
+                <div class="heading">
+                    <div class="h-left">In progress</div>
+                    <div class="h-right">Count</div>
+                </div>
+                <div class="tasks">
+
+                </div>
+            </div>
+            <div id="doneTaskCol" class="task-column">
+                <div class="heading">
+                    <div class="h-left">Done</div>
+                    <div class="h-right">Count</div>
+                </div>
+                <div class="tasks">
+
+                </div>
+            </div>
+        </section>
+    </main>
+    <div class="modal">
+        <div class="modal-bg">
+            <i title="close" class="ri-close-large-line"></i>
+        </div>
+        <div class="modal-input">
+            <h4>Add new task</h4>
+            <input id="task-title-input" type="text" placeholder="Task title">
+            <textarea name="task-desc" id="task-desc-input" placeholder="Task description"></textarea>
+            <button id="add-new-task">Add task</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
