@@ -5,6 +5,6 @@ class AppResponse {
         this.message = message;
         this.data = data;
     }
-};
+}
 
 export default AppResponse;

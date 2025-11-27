@@ -25,9 +25,10 @@ const userSchema = new Schema(
         },
         avatar: {
             type: String, // Cloudinary Link
-        }, refreshToken: {
-            type: String
-        }
+        },
+        refreshToken: {
+            type: String,
+        },
     },
     {
         timestamps: true,
@@ -42,7 +43,7 @@ userSchema.pre("save", async function () {
         this.password = await bcrypt.hash(this.password, 10);
     } catch (error) {
         // Throwing an error stops the save process automatically
-        throw new Error(error); 
+        throw new Error(error);
     }
 });
 
@@ -52,12 +53,16 @@ userSchema.methods.comparePassword = async function (password) {
 };
 
 userSchema.methods.generateAccessToken = function () {
-    return jwt.sign({ _id: this._id }, dotenv.ACCESS_TOKEN_SECRET, { expiresIn: dotenv.ACCESS_TOKEN_EXPIRY })
+    return jwt.sign({ _id: this._id }, dotenv.ACCESS_TOKEN_SECRET, {
+        expiresIn: dotenv.ACCESS_TOKEN_EXPIRY,
+    });
 };
 
 userSchema.methods.generateRefreshToken = function () {
-    return jwt.sign({ _id: this._id }, dotenv.REFRESH_TOKEN_SECRET, { expiresIn: dotenv.REFRESH_TOKEN_EXPIRY });
-}
+    return jwt.sign({ _id: this._id }, dotenv.REFRESH_TOKEN_SECRET, {
+        expiresIn: dotenv.REFRESH_TOKEN_EXPIRY,
+    });
+};
 
 userSchema.methods.toSafeObj = function () {
     const userObject = this.toObject();
@@ -67,7 +72,7 @@ userSchema.methods.toSafeObj = function () {
     delete userObject.__v;
 
     return userObject;
-}
+};
 
 const userModel = mongoose.model("User", userSchema);
 

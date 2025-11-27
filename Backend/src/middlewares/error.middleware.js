@@ -5,7 +5,8 @@ export const errorHandler = (err, req, res, next) => {
         return next(err);
     }
 
-    const statusCode = (err.statusCode && err.statusCode >= 400) ? err.statusCode : 500;
+    const statusCode =
+        err.statusCode && err.statusCode >= 400 ? err.statusCode : 500;
 
     res.status(statusCode).json({
         status: err.status || "error",

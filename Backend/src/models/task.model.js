@@ -21,8 +21,6 @@ const taskSchema = new Schema(
     }
 );
 
-
-
 const taskModel = mongoose.model("Task", taskSchema);
 
 export default taskModel;
