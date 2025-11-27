@@ -20,8 +20,10 @@ app.use(cookieParser());
 
 // Routes
 import userRoutes from "./routes/user.routes.js";
+import taskRoutes from "./routes/task.routes.js";
 
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/task", taskRoutes);
 
 app.use(errorHandler);
 
