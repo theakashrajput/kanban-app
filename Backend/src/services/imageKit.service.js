@@ -23,3 +23,20 @@ export const uploadToCloud = async (file) => {
         }
     }
 };
+
+export const deleteFromCloud = async (fileName) => {
+    try {
+        const files = await client.assets.list({
+            searchQuery: `name="${fileName.toString()}"`
+        })
+        if (files.length > 0) {
+            const fileId = files[0].fileId;
+            const res = await client.files.delete(fileId);
+            console.log(res);
+        } else {
+            console.log("File not found");
+        }
+    } catch (error) {
+        console.log(`Error during file delete from cloud {File Name:${fileName}, Error: ${error.message}}`);
+    }
+};
