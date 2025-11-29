@@ -55,11 +55,17 @@ html {
 body {
     background-color: var(--background-color);
     color: var(--primary-text-color);
+    overflow-x: hidden;
 }
 
-main {
+#root {
     height: 100vh;
     width: 100vw;
+}
+
+.main {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -68,11 +74,58 @@ button:active {
     scale: 0.95;
 }
 
+/* Navbar */
 nav {
     padding: var(--nav-padding);
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+nav .right {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-xl);
+    position: relative;
+}
+
+nav .profile {
+    height: 35px;
+    width: 35px;
+    border-radius: var(--border-radius-2xl);
+    background-color: #f4f4f4;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+nav .profile img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+nav .profile-options {
+    position: absolute;
+    z-index: 1;
+    top: 70%;
+    left: -60%;
+    width: 100px;
+    height: 50px;
+    border: 2px solid #f4f4f4;
+    background-color: var(--bg-button-color);
+    border-radius: var(--border-radius-sm);
+}
+
+nav .profile-options .option {
+    height: 100%;
+    width: 100%;
+    padding: var(--padding-md);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+nav .profile-options .option:hover {
+    background-color: var(--bg-task-color);
 }
 
 nav button {
@@ -87,12 +140,18 @@ nav button {
     transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+
+/* Board Body */
 .board {
     flex-grow: 1;
     padding: var(--section-padding);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--padding-2xl);
+    overflow-x: auto;
+    /* Allows board to scroll horizontally if needed */
+    width: 100%;
+    height: 100vh;
 }
 
 .board .task-column {
