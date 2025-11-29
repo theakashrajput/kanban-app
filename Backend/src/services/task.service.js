@@ -25,7 +25,7 @@ export const deleteTaskService = async (taskId, userId) => {
 };
 
 export const moveTaskService = async (taskId, status) => {
-    const validStatus = ['ToDo', 'InProcess', 'Done'];
+    const validStatus = ['ToDo', 'InProgress', 'Done'];
     if (!status || !validStatus.includes(status)) throw new AppError(400, "Invalid status");
 
     const updatedTask = taskModel.findByIdAndUpdate(taskId, { status }, { new: true, runValidators: true });

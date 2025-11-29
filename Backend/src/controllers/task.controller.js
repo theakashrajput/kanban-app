@@ -8,7 +8,7 @@ export const getUserAllTasks = asyncWrapper(async (req, res) => {
 
     if (!user) throw new AppError(401, "Unauthorized request");
 
-    const tasks = getAllTaskService(user._id);
+    const tasks = await getAllTaskService(user._id);
 
     return res.status(200).json(new AppResponse(200, "Tasks fetched successfully", tasks));
 });
@@ -44,7 +44,7 @@ export const moveTask = asyncWrapper(async (req, res) => {
     const taskId = req.params.id;
     const { status } = req.body;
 
-    if (!taskId) throw new AppError(400, "Invalid request");
+    if (!taskId || !status) throw new AppError(400, "Invalid request");
 
     const updatedTask = await moveTaskService(taskId, status);
 

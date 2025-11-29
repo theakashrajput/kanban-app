@@ -5,6 +5,7 @@ import {
     uploadToCloud,
 } from "../services/imageKit.service.js";
 import jwt from "jsonwebtoken";
+import { dotenv } from "../../config/env.config.js";
 
 const generateTokens = async (user) => {
     try {
@@ -92,6 +93,7 @@ export const userLogoutService = async (userId) => {
 };
 
 export const refreshAccessTokenService = async (incomingRefreshToken) => {
+    
     try {
         const decoded = jwt.verify(
             incomingRefreshToken,
@@ -109,6 +111,7 @@ export const refreshAccessTokenService = async (incomingRefreshToken) => {
 
         return { accessToken, refreshToken };
     } catch (error) {
+        console.log(error.message);
         throw new AppError(401, "Invalid refresh token");
     }
 };
