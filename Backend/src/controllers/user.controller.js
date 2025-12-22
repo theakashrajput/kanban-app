@@ -10,6 +10,7 @@ import {
 } from "../services/user.service.js";
 import { cookieOptions } from "../../config/cookies.config.js";
 import AppResponse from "../utils/AppResponse.js";
+import userModel from "../models/user.model.js";
 
 export const registerUser = asyncWrapper(async (req, res) => {
     const { userName, email, password } = req.body;
@@ -72,6 +73,15 @@ export const logoutUser = asyncWrapper(async (req, res) => {
         .clearCookie("refreshToken", cookieOptions)
         .json(new AppResponse(200, "User logout successfully"));
 });
+
+export const verifyMe = asyncWrapper(async (req, res) => {
+    const user  = req.user;
+    if (!user) throw new AppError(401, "Unauthorized request");
+
+    const userInstance = await userModel.findById(user._id);
+
+    return res.status(200).json(new AppResponse(200, "Data fetched successfully", userInstance.toSafeObj()));
+})
 
 export const refreshAccessToken = asyncWrapper(async (req, res) => {
     const incomingRefreshToken =

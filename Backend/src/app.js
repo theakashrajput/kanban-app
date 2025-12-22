@@ -6,11 +6,14 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
 
+
 // Configuration
 app.use(
     cors({
         origin: dotenv.CORS,
         credentials: true,
+        methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
+        allowedHeaders: ["Content-Type", "Authorization"],
     })
 );
 app.use(express.json({ limit: "16kb" }));

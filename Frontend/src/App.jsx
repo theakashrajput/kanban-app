@@ -1,11 +1,7 @@
-import MainRoutes from "./routing/MainRoutes";
+import MainRoutes from "./routes/MainRoutes";
 
 const App = () => {
-  return (
-    <div className="main">
-      <MainRoutes />
-    </div>
-  );
+  return <MainRoutes />;
 };
 
 export default App;

@@ -1,12 +1,13 @@
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import { BrowserRouter } from "react-router-dom";
-import App from "./App.jsx";
-import TaskProvider from "./context/taskContext.jsx";
-createRoot(document.getElementById("root")).render(
-  <TaskProvider>
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+import { BrowserRouter } from 'react-router-dom'
+import { AuthContextProvider } from './context/AuthContext.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <AuthContextProvider>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </TaskProvider>
-);
+  </AuthContextProvider>
+)
