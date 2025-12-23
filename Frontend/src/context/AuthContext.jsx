@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import { createContext, useContext, useState, useCallback, useMemo } from "react";
+import { logoutUserApi } from "../api/auth.api";
 
 const AuthContext = createContext();
 
@@ -10,15 +11,21 @@ export const AuthContextProvider = ({ children }) => {
         setUser(userData);
     }, []);
 
-    const logoutUser = useCallback(() => {
+    const clearState = useCallback(() => {
         setUser(null);
     }, []);
 
-    const value = {
+    const logoutUser = useCallback(() => {
+        logoutUserApi();
+        clearState();
+    }, [clearState]);
+
+    const value = useMemo(() => ({
         user,
         logoutUser,
-        loggedInUser
-    }
+        loggedInUser,
+        clearState
+    }), [user, loggedInUser, logoutUser, clearState]);
 
     return (
         <AuthContext.Provider value={value} >

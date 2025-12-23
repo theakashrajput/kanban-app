@@ -25,6 +25,18 @@ export const loginUserApi = async (user) => {
     }
 }
 
+export const logoutUserApi = async () => {
+    try {
+        const { data } = await axiosInstance.get("/user/logout");
+        return data;
+    } catch (error) {
+        return {
+            success: false,
+            message: error.response?.data?.message || "Logout failed. Please try again later."
+        }
+    }
+};
+
 export const verifyMe = async () => {
     try {
         const { data } = await axiosInstance.get("/user/verify");

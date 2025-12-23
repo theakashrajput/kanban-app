@@ -75,7 +75,7 @@ export const logoutUser = asyncWrapper(async (req, res) => {
 });
 
 export const verifyMe = asyncWrapper(async (req, res) => {
-    const user  = req.user;
+    const user = req.user;
     if (!user) throw new AppError(401, "Unauthorized request");
 
     const userInstance = await userModel.findById(user._id);

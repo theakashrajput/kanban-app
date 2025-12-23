@@ -9,7 +9,7 @@ import { verifyMe } from "../api/auth.api";
 const MainRoutes = () => {
 
   const [loading, setLoading] = useState(true);
-  const { user, loggedInUser, logoutUser } = useAuth();
+  const { user, loggedInUser, clearState } = useAuth();
 
   useEffect(() => {
     let isMounted = true;
@@ -18,16 +18,16 @@ const MainRoutes = () => {
       try {
         const res = await verifyMe();
         if (!isMounted) return;
-        
+
         if (res && res.success && res.data) {
           loggedInUser(res.data);
         } else {
-          logoutUser();
+          clearState();
         }
       } catch (error) {
         if (!isMounted) return;
         console.log("User not authenticated");
-        logoutUser();
+        clearState();
       } finally {
         if (isMounted) {
           setLoading(false);
