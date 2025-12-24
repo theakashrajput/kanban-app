@@ -48,9 +48,13 @@ const MainRoutes = () => {
 
   return (
     <Routes>
+
+      {/* Public Routes */}
       <Route path="/auth/register" element={<Register />} />
 
       <Route path="/auth/login" element={!user ? <Login /> : <Navigate to="/" replace={true} />} />
+
+      {/* Protected Routes */}
       <Route path="/" element={user ? <Dashboard /> : <Navigate to="auth/login" replace={true} />} />
     </Routes>
   );
