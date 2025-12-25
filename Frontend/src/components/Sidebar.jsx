@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import ProfileImage from "/public/icons8-customer-96.png"
+import ProfileImage from "/icons8-customer-96.png"
 
 const Sidebar = ({ openWorkspaces, currentBoard, toggleWorkspace, MOCK_DATA, onSelectBoard }) => {
     const [openSetting, setOpenSetting] = useState(false);

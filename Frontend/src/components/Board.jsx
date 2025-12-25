@@ -1,6 +1,14 @@
-
+import { useEffect, useState } from "react";
+import { BOARD_DATA } from "../data";
+import Column from "./Column";
 
 const Board = ({ activeWorkspaceTitle, activeBoardData }) => {
+
+    const [allColumns, setAllColumns] = useState([]);
+
+    useEffect(() => {
+        setAllColumns(BOARD_DATA.columns);
+    }, [BOARD_DATA]);
 
     return (
         <div className='h-screen flex-1 bg-zinc-950 flex flex-col overflow-hidden'>
@@ -29,40 +37,8 @@ const Board = ({ activeWorkspaceTitle, activeBoardData }) => {
                     </button>
                 </div>
             </header >
-            <section className='flex-1 overflow-x-auto overflow-y-hidden p-8 flex gap-6 custom-scrollbar"'>
-                {/* To Do Column */}
-                <div className="w-80 shrink-0 flex flex-col h-full bg-zinc-900/30 rounded-xl border border-white/5">
-                    <div className="p-4 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                            <h3 className="font-bold text-zinc-200 text-sm uppercase tracking-tight">To Do</h3>
-                            <span className="text-[10px] bg-zinc-800 text-zinc-500 px-2 py-0.5 rounded-full font-bold">3</span>
-                        </div>
-                        <button className="text-zinc-600 hover:text-zinc-400 text-lg">•••</button>
-                    </div>
-
-                    {/* Task Cards Container */}
-                    <div className="flex-1 overflow-y-auto p-2 space-y-3">
-                        {/* Card Design Reference */}
-                        <div className="bg-zinc-800/50 border border-white/5 p-4 rounded-lg shadow-sm hover:border-blue-500/30 transition-all cursor-pointer group">
-                            <div className="flex justify-between items-start mb-2">
-                                <span className="text-[10px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-bold uppercase">Development</span>
-                            </div>
-                            <h4 className="text-sm font-medium text-zinc-200 mb-3 group-hover:text-white">Design Board Header Layout</h4>
-                            <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-                                <div className="flex -space-x-2">
-                                    <div className="w-6 h-6 rounded-full border-2 border-zinc-900 bg-zinc-700"></div>
-                                </div>
-                                <span className="text-[10px] text-zinc-500 font-medium">Dec 25</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Add Card Footer */}
-                    <button className="p-3 m-2 rounded-lg border border-dashed border-zinc-800 text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800/20 text-sm font-medium transition-all text-left">
-                        + Add Card
-                    </button>
-                </div>
+            <section className='flex-1 overflow-x-scroll overflow-y-hidden p-8 flex gap-6 custom-scrollbar block"'>
+                {allColumns.map(column => <Column allColumns={allColumns} key={column.id} data={{ ...column }} />)}
 
                 {/* Add New Column Button */}
                 <button className="w-80 shrink-0 h-12 bg-zinc-900/20 hover:bg-zinc-900/40 border border-dashed border-zinc-800 rounded-xl text-zinc-500 text-sm font-bold transition-all">

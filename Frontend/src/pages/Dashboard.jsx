@@ -1,29 +1,7 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import Board from '../components/Board';
-
-const MOCK_DATA = {
-  user: { name: "Dev User", id: "u1" },
-  workspaces: [
-    {
-      id: "w1",
-      title: "Main Project",
-      boards: [
-        { id: 11, name: "Marketing Platform", icon: "🚀", taskCount: 12 },
-        { id: 12, name: "Mobile App Refactor", icon: "📱", taskCount: 5 },
-        { id: 13, name: "Q4 Strategy", icon: "📊", taskCount: 0 }
-      ]
-    },
-    {
-      id: "w2",
-      title: "Engineering Team",
-      boards: [
-        { id: 21, name: "API Documentation", icon: "🛠️", taskCount: 3 },
-        { id: 22, name: "Frontend Sprint", icon: "⚛️", taskCount: 8 },
-      ]
-    },
-  ]
-};
+import { MOCK_DATA } from '../data';
 
 const Dashboard = () => {
 
