@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
-import { BOARD_DATA } from "../data";
+import { useKanbanData } from "../context/DataContext";
 import Column from "./Column";
 
-const Board = ({ activeWorkspaceTitle, activeBoardData }) => {
+const Board = () => {
+    const { activeBoardData, activeWorkspaceTitle } = useKanbanData();
 
     const [allColumns, setAllColumns] = useState([]);
 
     useEffect(() => {
-        setAllColumns(BOARD_DATA.columns);
-    }, [BOARD_DATA]);
+        if (activeBoardData) {
+            setAllColumns(activeBoardData.columnIds);
+        }
+    }, [activeBoardData]);
 
     return (
         <div className='h-screen flex-1 bg-zinc-950 flex flex-col overflow-hidden'>
             <header className='flex items-center justify-between p-6 bg-zinc-900/50 border-b border-white/5'>
                 <div className='flex items-center gap-4'>
-                    <span className='text-3xl'>{activeBoardData?.icon}</span>
+                    <span className='text-3xl'>{activeBoardData ? activeBoardData?.icon : "☺️"}</span>
                     <div>
-                        <h2 className='text-xl font-bold text-white'>{activeBoardData?.name}</h2>
-                        <p className='text-xs text-zinc-500'>{activeWorkspaceTitle} / {activeBoardData?.name}</p>
+                        <h2 className='text-xl font-bold text-white'>{activeBoardData ? activeBoardData?.title : "Select Board"}</h2>
+                        <p className='text-xs text-zinc-500'>{activeWorkspaceTitle ? activeWorkspaceTitle : "Select Workspace"} / {activeBoardData ? activeBoardData?.title : "Select Board"}</p>
                     </div>
                 </div>
                 <div className='flex items-center gap-4'>
@@ -38,7 +41,7 @@ const Board = ({ activeWorkspaceTitle, activeBoardData }) => {
                 </div>
             </header >
             <section className='flex-1 overflow-x-scroll overflow-y-hidden p-8 flex gap-6 custom-scrollbar block"'>
-                {allColumns.map(column => <Column allColumns={allColumns} key={column.id} data={{ ...column }} />)}
+                {allColumns.map(columnId => <Column columnId={columnId} key={columnId} />)}
 
                 {/* Add New Column Button */}
                 <button className="w-80 shrink-0 h-12 bg-zinc-900/20 hover:bg-zinc-900/40 border border-dashed border-zinc-800 rounded-xl text-zinc-500 text-sm font-bold transition-all">

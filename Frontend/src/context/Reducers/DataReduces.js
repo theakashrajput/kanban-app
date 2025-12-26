@@ -6,7 +6,7 @@ export const DataReducer = (state, action) => {
     switch (action.type) {
         case "MOVE_TASK": {
             const { taskId, sourceColId, destColId } = action.payload;
-            const newSourceTaskIds = state.columns[sourceColId].taskIds.filter(task => task.id !== taskId);
+            const newSourceTaskIds = state.columns[sourceColId].taskIds.filter(task => task !== taskId);
 
             const newDestTaskIds = [...state.columns[destColId].taskIds, taskId];
 
@@ -36,6 +36,7 @@ export const DataReducer = (state, action) => {
             };
         }
 
-        case "CLEAR_ALL_COMPLETED_TASKS":
+        default:
+            return state
     }
 };

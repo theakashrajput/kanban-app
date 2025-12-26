@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import ProfileImage from "/icons8-customer-96.png"
+import { useKanbanData } from '../context/DataContext';
+import { useAuth } from '../context/AuthContext';
 
-const Sidebar = ({ openWorkspaces, currentBoard, toggleWorkspace, MOCK_DATA, onSelectBoard }) => {
+const Sidebar = () => {
+    const { state, currentBoard, toggleWorkspace, setCurrentBoardHandler, openWorkspaces } = useKanbanData()
+    const { user } = useAuth();
+
     const [openSetting, setOpenSetting] = useState(false);
 
     const modalRef = useRef(null);
@@ -24,6 +29,12 @@ const Sidebar = ({ openWorkspaces, currentBoard, toggleWorkspace, MOCK_DATA, onS
 
     const toggleSetting = () => setOpenSetting(prev => !prev);
 
+    const getBoardsByWorkspace = (workspaceId) => {
+        const workspace = state.workspaces[workspaceId]
+        if (!workspace) return [];
+        return workspace.boardIds.map(boardId => state.boards[boardId]);
+    }
+
     return (
         <aside className='bg-zinc-900 h-screen w-64 shadow-2xl flex flex-col border-r border-white/5 text-zinc-400 font-sans'>
 
@@ -39,11 +50,12 @@ const Sidebar = ({ openWorkspaces, currentBoard, toggleWorkspace, MOCK_DATA, onS
             <div className='flex-1 px-3 overflow-y-auto custom-scrollbar space-y-2'>
 
                 <p className='text-[10px] font-bold text-zinc-500 uppercase tracking-widest px-3 mb-4'>
-                    Workspaces ({MOCK_DATA.workspaces.length})
+                    Workspaces ({Object.keys(state.workspaces).length})
                 </p>
 
-                {MOCK_DATA.workspaces.map(workspace => (
+                {Object.values(state.workspaces).map(workspace => (
                     <div key={workspace.id} className="mb-2">
+
                         {/* Workspace Header */}
                         <button
                             onClick={() => toggleWorkspace(workspace.id)}
@@ -58,27 +70,28 @@ const Sidebar = ({ openWorkspaces, currentBoard, toggleWorkspace, MOCK_DATA, onS
                                 </span>
                             </div>
                             <span className="text-[10px] bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-500 group-hover:text-zinc-300">
-                                {workspace.boards.length}
+                                {workspace.boardIds.length}
                             </span>
                         </button>
 
                         {/* Collapsible Boards List */}
                         {openWorkspaces.includes(workspace.id) && (
                             <nav className="mt-1 space-y-0.5 ml-3 border-l border-zinc-800">
-                                {workspace.boards.map(board => (
-                                    <button
+                                {getBoardsByWorkspace(workspace.id).map(board => (
+                                    board && (<button
                                         key={board.id}
-                                        onClick={() => onSelectBoard(board.id)}
+                                        onClick={() => setCurrentBoardHandler(board.id)}
                                         className={`w-full flex items-center justify-between px-4 py-2 text-sm rounded-r-md transition-all group
                                             ${currentBoard === board.id
                                                 ? "bg-blue-600/10 text-blue-400 border-l-2 border-blue-500 shadow-[inset_10px_0_15px_-10px_rgba(37,99,235,0.2)]"
-                                                : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"}`}
+                                                : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"}`
+                                        }
                                     >
                                         <div className="flex items-center gap-3">
                                             <span className={`transition-transform duration-300 ${currentBoard === board.id ? 'scale-110' : 'grayscale group-hover:grayscale-0'}`}>
                                                 {board.icon}
                                             </span>
-                                            <span className="truncate max-w-[120px]">{board.name}</span>
+                                            <span className="truncate max-w-[120px]">{board.title}</span>
                                         </div>
 
                                         {board.taskCount > 0 && (
@@ -86,7 +99,7 @@ const Sidebar = ({ openWorkspaces, currentBoard, toggleWorkspace, MOCK_DATA, onS
                                                 {board.taskCount}
                                             </span>
                                         )}
-                                    </button>
+                                    </button>)
                                 ))}
 
                                 <button className='w-full py-2 pl-4 flex items-center gap-2 text-[11px] font-medium text-zinc-600 hover:text-blue-400 transition-colors'>
@@ -108,7 +121,7 @@ const Sidebar = ({ openWorkspaces, currentBoard, toggleWorkspace, MOCK_DATA, onS
                             <img src={ProfileImage} alt="Profile" className="w-full h-full object-cover" />
                         </div>
                         <div className='flex flex-col'>
-                            <span className='text-xs font-bold text-zinc-200 truncate w-24'>{MOCK_DATA.user.name}</span>
+                            <span className='text-xs font-bold text-zinc-200 truncate w-24'>{user.userName}</span>
                             <span className='text-[10px] text-zinc-500'>Pro Plan</span>
                         </div>
                     </div>
