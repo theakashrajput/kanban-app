@@ -32,7 +32,7 @@ export const INITIAL_DATA = {
     "board-3": {
       id: "board-3",
       title: "Kanban App",
-      icon: "◼️",
+      icon: "☑️",
       taskCount: 0,
       columnIds: [],
     },

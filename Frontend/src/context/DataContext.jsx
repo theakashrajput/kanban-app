@@ -1,15 +1,20 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
-import { INITIAL_DATA } from '../data';
-import { DataReducer } from './Reducers/DataReduces';
+import { DataReducer, initialState } from './Reducers/DataReduces';
+
+const initializer = (initialValue) => {
+    const savedData = localStorage.getItem("kanban-data");
+    return savedData ? JSON.parse(savedData) : initialValue;
+}
 
 const KanbanDataContext = createContext();
 
 export const KanbanDataContextProvider = ({ children }) => {
-
-    const [state, dispatch] = useReducer(DataReducer, INITIAL_DATA);
+    const [state, dispatch] = useReducer(DataReducer, initialState, initializer);
 
     const [openWorkspaces, setOpenWorkspaces] = useState([]);
-    const [currentBoard, setCurrentBoard] = useState();
+    const [currentBoard, setCurrentBoard] = useState(null);
+
+    const activeBoardData = currentBoard ? state.boards[currentBoard] : null;
 
     const toggleWorkspace = (id) => {
         setOpenWorkspaces(prev =>
@@ -17,19 +22,18 @@ export const KanbanDataContextProvider = ({ children }) => {
         );
     }
 
-    const activeBoardData = state.boards[currentBoard];
-
     const setCurrentBoardHandler = (id) => {
         setCurrentBoard(id);
     };
 
     const activeWorkspaceTitle = useMemo(() => {
+        if (!currentBoard) return null;
         const workspace = openWorkspaces
             .map(workspaceId => state.workspaces[workspaceId])
-            .find(workspace => workspace.boardIds.includes(currentBoard));
+            .find(workspace => workspace?.boardIds?.includes(currentBoard));
 
         return workspace?.title
-    }, [currentBoard]);
+    }, [currentBoard, openWorkspaces, state.workspaces]);
 
     useEffect(() => {
         localStorage.setItem("kanban-data", JSON.stringify(state));

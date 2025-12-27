@@ -1,13 +1,15 @@
 export const initialState = {
-    data: []
+    tasks: {},
+    columns: {},
+    boards: {},
+    workspaces: {}
 };
 
 export const DataReducer = (state, action) => {
     switch (action.type) {
         case "MOVE_TASK": {
             const { taskId, sourceColId, destColId } = action.payload;
-            const newSourceTaskIds = state.columns[sourceColId].taskIds.filter(task => task !== taskId);
-
+            const newSourceTaskIds = state.columns[sourceColId].taskIds.filter(id => id !== taskId);
             const newDestTaskIds = [...state.columns[destColId].taskIds, taskId];
 
             return {
@@ -22,16 +24,11 @@ export const DataReducer = (state, action) => {
 
         case "ADD_NEW_TASK": {
             const { newTask, columnId } = action.payload;
-
-            const updatedColumnTasksList = [...state.columns[columnId].taskId, newTask.id];
-
-            const updatedTasks = {
-                ...state.tasks, [newTask.id]: newTask
-            };
+            const updatedColumnTasksList = [...state.columns[columnId]?.taskIds || [], newTask.id];
 
             return {
                 ...state,
-                tasks: updatedTasks,
+                tasks: { ...state.tasks, [newTask.id]: newTask },
                 columns: { ...state.columns, [columnId]: { ...state.columns[columnId], taskIds: updatedColumnTasksList } }
             };
         }

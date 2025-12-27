@@ -36,7 +36,7 @@ const Board = () => {
                         ⚙️
                     </button>
                     <button className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-blue-600/20 active:scale-95">
-                        + New Task
+                        + New Workspace
                     </button>
                 </div>
             </header >
@@ -44,9 +44,14 @@ const Board = () => {
                 {allColumns.map(columnId => <Column columnId={columnId} key={columnId} />)}
 
                 {/* Add New Column Button */}
-                <button className="w-80 shrink-0 h-12 bg-zinc-900/20 hover:bg-zinc-900/40 border border-dashed border-zinc-800 rounded-xl text-zinc-500 text-sm font-bold transition-all">
-                    + Add Column
-                </button>
+                {activeBoardData ?
+                    <button className="w-80 shrink-0 h-12 bg-zinc-900/20 hover:bg-zinc-900/40 border border-dashed border-zinc-800 rounded-xl text-zinc-500 text-sm font-bold transition-all">
+                        + Add Column
+                    </button> :
+                    <div className="w-80 flex items-center justify-center shrink-0 h-12 bg-zinc-900/20 hover:bg-zinc-900/40 border border-dashed border-zinc-800 rounded-xl text-zinc-500 text-sm font-bold transition-all">
+                        Select Board 😎
+                    </div>
+                }
 
             </section>
         </div >
